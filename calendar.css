@@ -1,0 +1,248 @@
+:root
+{
+    --unit-025: .0625rem;
+    --unit-050: .125rem;
+    --unit-100: .25rem;
+    --unit-200: .5rem;
+    --unit-250: .75rem;
+    --unit-300: 1rem;
+    --unit-400: 1.125rem;
+    --unit-500: 1.25rem;
+    --unit-600: 1.5rem;
+    --unit-700: 2rem;
+    --unit-800: 3rem;
+    --unit-900: 4rem;
+    --unit-950: 6rem;
+    --unit-1000: 8rem;
+    
+    
+    --clr-white: hsl(0 100% 100% / var(--transparency, 1));
+    --clr-black: hsl(0 0% 0% / var(--transparency, 1));
+    --primary-hue: 214;
+    --clr-primary-025: hsl(var(--primary-hue) 32% 98% / var(--transparency, 1));
+    --clr-primary-050: hsl(var(--primary-hue) 32% 95% / var(--transparency, 1));
+    --clr-primary-100: hsl(var(--primary-hue) 32% 90% / var(--transparency, 1));
+    --clr-primary-200: hsl(var(--primary-hue) 32% 80% / var(--transparency, 1));
+    --clr-primary-300: hsl(var(--primary-hue) 32% 70% / var(--transparency, 1));
+    --clr-primary-400: hsl(var(--primary-hue) 32% 60% / var(--transparency, 1));
+    --clr-primary-500: hsl(var(--primary-hue) 32% 50% / var(--transparency, 1));
+    --clr-primary-600: hsl(var(--primary-hue) 32% 40% / var(--transparency, 1));
+    --clr-primary-700: hsl(var(--primary-hue) 32% 30% / var(--transparency, 1));
+    --clr-primary-800: hsl(var(--primary-hue) 32% 20% / var(--transparency, 1));
+    --clr-primary-900: hsl(var(--primary-hue) 32% 10% / var(--transparency, 1));
+}
+
+body
+{
+    font-size: 16px;
+    font-family: system-ui,sans;
+}
+
+main
+{
+    margin-inline: auto;
+    max-width: 130ch;
+}
+
+[data-calendar-wrapper]
+{
+    display: flex;
+    flex-direction: column;
+    gap: var(--unit-400);
+    align-items: stretch;
+}
+
+[data-calendar-head]
+{
+    display: flex;
+    gap: var(--unit-400);
+    align-items: center;
+}
+
+[data-calendar-head] [data-calendar-controls] button
+{
+    font-size: var(--unit-400);
+}
+
+[data-calendar-body] ul[data-calendar-weekdays]
+{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    padding-inline-start: 0;
+}
+
+[data-calendar-body] ul[data-calendar-weekdays] li
+{   
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+[data-calendar-body] ul[data-calendar-days]
+{
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0,1fr));
+    gap: var(--unit-100);
+    padding-inline-start: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -ms-user-select: none;
+}
+
+[data-calendar-body] ul[data-calendar-days] *
+{
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -ms-user-select: none;
+}
+
+/* current month */
+[data-calendar-body] ul[data-calendar-days] li
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: var(--clr-primary-200);
+    min-height: var(--unit-1000);
+    position: relative;
+    display: block;
+    padding: var(--unit-300);
+    border-radius: var(--unit-300);
+    transition: all .15s ease-in-out;
+}
+
+/* past or previous month */
+[data-calendar-body] ul[data-calendar-days] li.inactive
+{
+    background-color: var(--clr-primary-050);
+}
+
+[data-calendar-body] ul[data-calendar-days] li.vis
+{
+    /**** make day cell within week stretch in height to fil events ****/
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+}
+
+/* today */
+[data-calendar-body] ul[data-calendar-days] li.active
+{
+    background-color: var(--clr-primary-300);
+}
+
+/* week number */
+[data-calendar-body] ul[data-calendar-days] li[data-is-monday="true"]:before
+{
+    content: attr(data-week-number);
+    position: absolute;
+    left: calc(-3 * var(--unit-200));
+    top: calc(var(--unit-300) + var(--unit-050));
+    color: var(--clr-error-500);
+}
+
+/* day number in circle */
+[data-calendar-body] ul[data-calendar-days] li span
+{
+    margin-inline-start: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1/1;
+    width: var(--unit-500);
+    padding: var(--unit-050);
+    border-radius: var(--unit-900);
+    background-color: var(--clr-white);
+    color: var(--clr-primary-900);
+    font-size: var(--font-size-300);
+    user-select: none;
+}
+
+/*inactive days, days outside current month*/
+[data-calendar-body] ul[data-calendar-days] li.inactive span
+{
+    background-color: var(--clr-primary-900);
+    color: var(--clr-white);
+}
+
+/*event wrapper*/
+[data-calendar-body] ul[data-calendar-days] li .event
+{
+    font-size: var(--font-size-200);
+    position: relative;
+}
+
+[data-calendar-body] ul[data-calendar-days] li .event > button
+{
+    background-color: var(--clr-primary-600);
+    color: var(--clr-white);
+    padding-block: var(--unit-100);
+    padding-inline: var(--unit-200);
+    border-radius: var(--unit-300);
+    text-align: left;
+    margin-block-start: var(--unit-200);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 0;
+    width: 100%;
+    cursor: pointer;
+}
+
+[data-calendar-body] ul[data-calendar-days] li.draggedover
+{
+    box-shadow: inset 0 0 var(--unit-1000) rgb(0 0 0 /.2); 
+}
+
+[data-calendar-body] ul[data-calendar-days] li .event dialog
+{
+    position: absolute;
+    z-index: 3;
+    width: 100%;
+    max-height: calc(2 * var(--unit-1000));
+    top: calc(100% + var(--unit-100));
+    background-color: var(--clr-white);
+    color: var(--clr-primary-900);
+    padding-block: var(--unit-300);
+    padding-inline: var(--unit-300);
+    border-radius: var(--unit-200);
+    text-align: left;
+    border: none;
+    width: calc(2 * var(--unit-1000));
+    box-shadow: var(--shadow-300);
+}
+
+[data-calendar-body] ul[data-calendar-days] li .event dialog article
+{
+    overflow-y: auto;
+    height: auto;
+    line-height: var(--line-height-500);
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    max-height: calc(2 * var(--unit-1000) - 2 * var(--unit-300));
+}
+
+[data-calendar-body] ul[data-calendar-days] li .event dialog:before
+{
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--unit-100));
+    left: 10%;
+    width: 0;
+    height: 0;
+    border-width: 0 var(--unit-100) var(--unit-100) var(--unit-100);
+    border-color: transparent transparent var(--clr-white) transparent;
+    border-style: solid;
+}
